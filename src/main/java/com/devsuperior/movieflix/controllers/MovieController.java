@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,6 +24,14 @@ public class MovieController {
 	@GetMapping
 	public ResponseEntity<Page<MovieCardDTO>> getMovies(Pageable pageable) {
 		Page<MovieCardDTO> dto = service.pagedMovies(pageable);
+		return ResponseEntity.ok().body(dto);
+	}
+    
+    
+    @PreAuthorize("hasAnyRole('VISITOR', 'MEMBER')")
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<MovieCardDTO> getMovie(@PathVariable Long id) {
+    	MovieCardDTO dto = service.getMovie(id);
 		return ResponseEntity.ok().body(dto);
 	}
 }
