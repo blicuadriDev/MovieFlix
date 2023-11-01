@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devsuperior.movieflix.dto.MovieCardDTO;
+import com.devsuperior.movieflix.dto.MovieDetailsDTO;
 import com.devsuperior.movieflix.services.MovieService;
 
 @RestController
@@ -27,7 +28,7 @@ public class MovieController {
 	public ResponseEntity<Page<MovieCardDTO>> getMovies(
 			@RequestParam (value="genreId", defaultValue="0") Long genreId, 
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
-			@RequestParam (value = "size", defaultValue = "4") Integer size,
+			@RequestParam (value = "size", defaultValue = "6") Integer size,
 			@RequestParam (value = "direction", defaultValue = "ASC") String direction,
 			@RequestParam (value = "orderBy", defaultValue = "title") String orderBy) {
     	
@@ -41,8 +42,8 @@ public class MovieController {
     
     @PreAuthorize("hasAnyRole('VISITOR', 'MEMBER')")
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<MovieCardDTO> getMovie(@PathVariable Long id) {
-    	MovieCardDTO dto = service.getMovie(id);
+	public ResponseEntity<MovieDetailsDTO> getMovie(@PathVariable Long id) {
+    	MovieDetailsDTO dto = service.getMovie(id);
 		return ResponseEntity.ok().body(dto);
 	}
     

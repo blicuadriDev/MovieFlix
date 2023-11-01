@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.devsuperior.movieflix.dto.MovieCardDTO;
+import com.devsuperior.movieflix.dto.MovieDetailsDTO;
 import com.devsuperior.movieflix.entities.Genre;
 import com.devsuperior.movieflix.entities.Movie;
 import com.devsuperior.movieflix.repositories.GenreRepository;
@@ -43,10 +44,10 @@ public class MovieService {
 	
 
 	@Transactional(readOnly = true)
-	public MovieCardDTO getMovie(Long id) {
+	public MovieDetailsDTO getMovie(Long id) {
 		Optional<Movie> aux = repository.findById(id);
 		Movie entity = aux.orElseThrow(() -> new ResourceNotFoundException("Movie not found!"));
-		return new MovieCardDTO(entity);
+		return new MovieDetailsDTO(entity);
 	}
 
 	public Page<MovieCardDTO> getMovieByGenre(Long genreId, Pageable pageable) {
